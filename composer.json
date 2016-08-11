@@ -1,0 +1,20 @@
+{
+    "name": "npl/core",
+    "description": "description_text",
+    "minimum-stability": "stable",
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "Fabian Schweizer",
+            "email": "fa.schweizer@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "autoload":{
+        "psr-4":{
+            "Npl\\":"src/"
+        }
+    }
+}
