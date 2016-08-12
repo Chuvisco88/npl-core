@@ -6,8 +6,18 @@ use Npl\User\Entity\UserEntity;
 use Npl\User\Tests\Fake\View\FakeUserView;
 use Npl\User\ViewFactory\UserViewFactory;
 
+/**
+ * Class FakeUserViewFactory
+ *
+ * @package Npl\User\Tests\Fake\ViewFactory
+ */
 class FakeUserViewFactory implements UserViewFactory
 {
+    /**
+     * @param UserEntity $user
+     *
+     * @return FakeUserView
+     */
     public function create(UserEntity $user)
     {
         $view = new FakeUserView();

@@ -8,6 +8,11 @@ use Npl\User\Tests\Fake\Repository\FakeUserRepository;
 use Npl\User\Tests\Fake\Response\FakeListUsersResponse;
 use Npl\User\Tests\Fake\ViewFactory\FakeUserViewFactory;
 
+/**
+ * Class ListUsersTest
+ *
+ * @package Npl\User\UseCase
+ */
 class ListUsersTest extends \PHPUnit_Framework_TestCase
 {
     public function testMissingDependency()
@@ -32,6 +37,11 @@ class ListUsersTest extends \PHPUnit_Framework_TestCase
         static::assertNotEmpty($response->getUsers());
     }
 
+    /**
+     * @param null $userRepository
+     *
+     * @return FakeListUsersResponse
+     */
     private function processUseCase($userRepository = null)
     {
 
