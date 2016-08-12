@@ -14,22 +14,13 @@ class ListUsersTest extends \PHPUnit_Framework_TestCase
     public function testMissingDependency()
     {
         $this->setExpectedException(IllegalStateException::class);
-        $request = new FakeListUsersRequest();
-        $response = new FakeListUsersResponse();
-        $useCase = new ListUsersUseCase();
-        $useCase->process($request, $response);
+        $response = $this->processUseCase();
     }
 
     public function testEmptyUsers()
     {
         $userRepository = new FakeUserRepository();
-        $userViewFactory = new FakeUserViewFactory();
-        $request = new FakeListUsersRequest();
-        $response = new FakeListUsersResponse();
-        $useCase = new ListUsersUseCase();
-        $useCase->setUserRepository($userRepository);
-        $useCase->setUserViewFactory($userViewFactory);
-        $useCase->process($request, $response);
+        $response = $this->processUseCase($userRepository);
         $this->assertEmpty($response->getUsers());
     }
 
@@ -38,13 +29,22 @@ class ListUsersTest extends \PHPUnit_Framework_TestCase
         $users = [];
         $users[] = new UserEntity();
         $userRepository = new FakeUserRepository($users);
+        $response = $this->processUseCase($userRepository);
+        $this->assertNotEmpty($response->getUsers());
+    }
+
+    private function processUseCase($userRepository = null)
+    {
+
         $userViewFactory = new FakeUserViewFactory();
         $request = new FakeListUsersRequest();
         $response = new FakeListUsersResponse();
         $useCase = new ListUsersUseCase();
-        $useCase->setUserRepository($userRepository);
+        if (null !== $userRepository) {
+            $useCase->setUserRepository($userRepository);
+        }
         $useCase->setUserViewFactory($userViewFactory);
         $useCase->process($request, $response);
-        $this->assertNotEmpty($response->getUsers());
+        return $response;
     }
 }
