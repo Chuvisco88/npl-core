@@ -19,7 +19,7 @@ interface ListUsersResponse
     public function addUser(UserView $userView);
 
     /**
-     * @return mixedw
+     * @return mixed
      */
     public function getUsers();
 }
