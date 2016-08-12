@@ -10,4 +10,5 @@ use Npl\User\View\UserView;
  * @package Npl\User\Tests\Fake\View
  */
 class FakeUserView extends UserView
-{}
+{
+}

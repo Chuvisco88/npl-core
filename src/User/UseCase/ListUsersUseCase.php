@@ -52,7 +52,9 @@ class ListUsersUseCase
      */
     public function process(ListUsersResponse $response)
     {
-        if (null === $this->_userRepository || null === $this->_userViewFactory) {
+        if (null === $this->_userRepository
+            || null === $this->_userViewFactory
+        ) {
             throw new IllegalStateException('Missing dependency');
         }
 

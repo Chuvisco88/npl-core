@@ -10,4 +10,5 @@ use Npl\User\Request\ListUsersRequest;
  * @package Npl\User\Tests\Fake\Request
  */
 class FakeListUsersRequest implements ListUsersRequest
-{}
+{
+}

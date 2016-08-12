@@ -8,4 +8,5 @@ namespace Npl\User\Request;
  * @package Npl\User\Request
  */
 interface ListUsersRequest
-{}
+{
+}
