@@ -28,9 +28,14 @@ class LanEntity
      * @param           $name
      * @param \DateTime $startDatetime
      * @param \DateTime $endDatetime
+     * @throws \InvalidArgumentException
      */
     public function __construct($name, \DateTime $startDatetime, \DateTime $endDatetime)
     {
+        if ($startDatetime >= $endDatetime) {
+            throw new \InvalidArgumentException('Start datetime must be earlier than end datetime');
+        }
+
         $this->_name = $name;
         $this->_startDatetime = $startDatetime;
         $this->_endDatetime = $endDatetime;
