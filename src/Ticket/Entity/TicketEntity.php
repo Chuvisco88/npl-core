@@ -93,7 +93,7 @@ class TicketEntity
     }
 
     /**
-     * @return int
+     * @return LanEntity
      */
     public function getLan()
     {
