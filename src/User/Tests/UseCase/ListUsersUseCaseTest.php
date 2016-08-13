@@ -2,7 +2,6 @@
 
 namespace Npl\User\UseCase;
 
-use Npl\Core\Exception\IllegalStateException;
 use Npl\User\Entity\UserEntity;
 use Npl\User\Tests\Fake\Repository\FakeUserRepository;
 use Npl\User\Tests\Fake\Response\FakeListUsersResponse;
