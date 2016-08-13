@@ -52,7 +52,8 @@ class ListTicketsUseCase
         ListTicketsResponse $response
     ) {
         $user = $this->getUserFromRepository($request->getUserId());
-        $this->addTicketsFromUserToResponse($user, $response);
+        $tickets = $this->getTicketsFromRepositoryByUser($user);
+        $this->addTicketsFromUserToResponse($tickets, $response);
         return $response;
     }
 
@@ -74,15 +75,23 @@ class ListTicketsUseCase
     }
 
     /**
-     * @param UserEntity          $userEntity
+     * @param UserEntity $userEntity
+     *
+     * @return array
+     */
+    private function getTicketsFromRepositoryByUser(UserEntity $userEntity)
+    {
+        return $this->_ticketRepository->findByUserId($userEntity->getId());
+    }
+
+    /**
+     * @param array               $tickets
      * @param ListTicketsResponse $response
      *
      * @return ListTicketsResponse
      */
-    private function addTicketsFromUserToResponse(UserEntity $userEntity, ListTicketsResponse $response)
+    private function addTicketsFromUserToResponse(array $tickets, ListTicketsResponse $response)
     {
-        $tickets = $this->_ticketRepository->findByUserId($userEntity->getId());
-
         foreach ($tickets as $ticket) {
             $ticketView = $this->_ticketViewFactory->create($ticket);
             $response->addTicket($ticketView);
