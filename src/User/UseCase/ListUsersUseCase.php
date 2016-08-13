@@ -2,7 +2,6 @@
 
 namespace Npl\User\UseCase;
 
-use Npl\Core\Exception\IllegalStateException;
 use Npl\User\Repository\UserRepositoryInterface;
 use Npl\User\Response\ListUsersResponseInterface;
 use Npl\User\ViewFactory\UserViewFactoryInterface;
@@ -31,17 +30,11 @@ class ListUsersUseCase
 
     /**
      * @param ListUsersResponseInterface $response
-     *
-     * @throws IllegalStateException
      */
     public function process(ListUsersResponseInterface $response)
     {
         // Check if user exists
         $users = $this->_userRepository->findAll();
-
-        if (!$users) {
-            return;
-        }
 
         foreach ($users as $user) {
             $userView = $this->_userViewFactory->create($user);
