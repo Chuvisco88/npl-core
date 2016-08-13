@@ -13,7 +13,7 @@ use Npl\User\Tests\Fake\ViewFactory\FakeUserViewFactory;
  *
  * @package Npl\User\UseCase
  */
-class ListUsersTest extends \PHPUnit_Framework_TestCase
+class ListUsersUseCaseTest extends \PHPUnit_Framework_TestCase
 {
     public function testMissingDependency()
     {

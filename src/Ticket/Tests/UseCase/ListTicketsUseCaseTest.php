@@ -10,7 +10,7 @@ use Npl\Ticket\Tests\Fake\ViewFactory\FakeTicketViewFactory;
 use Npl\User\Entity\UserEntity;
 use Npl\User\Tests\Fake\Repository\FakeUserRepository;
 
-class ListTicketsTest extends \PHPUnit_Framework_TestCase
+class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
 {
     public function testHasNoTickets()
     {
