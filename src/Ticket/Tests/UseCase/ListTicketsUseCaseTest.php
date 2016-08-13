@@ -63,5 +63,6 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
         $useCase->process($request, $response);
 
         static::assertNotEmpty($response->getTickets());
+        static::assertEquals(1, $this->count($response->getTickets()));
     }
 }
