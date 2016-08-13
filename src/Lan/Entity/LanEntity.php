@@ -10,6 +10,10 @@ namespace Npl\Lan\Entity;
 class LanEntity
 {
     /**
+     * @var int
+     */
+    private $_id;
+    /**
      * @var string
      */
     private $_name;
@@ -39,6 +43,25 @@ class LanEntity
         $this->_name = $name;
         $this->_startDatetime = $startDatetime;
         $this->_endDatetime = $endDatetime;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->_id = $id;
+        return $this;
     }
 
     /**
