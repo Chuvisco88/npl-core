@@ -7,7 +7,7 @@ namespace Npl\Ticket\View;
  *
  * @package Npl\Ticket\View
  */
-class TicketView
+class TicketView implements TicketViewInterface
 {
     /**
      * @var string
