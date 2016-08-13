@@ -6,6 +6,8 @@ use Npl\Ticket\Repository\TicketRepository;
 use Npl\Ticket\Request\ListTicketsRequest;
 use Npl\Ticket\Response\ListTicketsResponse;
 use Npl\Ticket\ViewFactory\TicketViewFactory;
+use Npl\User\Entity\UserEntity;
+use Npl\User\Exception\UserNotFoundException;
 use Npl\User\Repository\UserRepository;
 
 /**
@@ -39,23 +41,47 @@ class ListTicketsUseCase
     }
 
     /**
-     * @param ListTicketsRequest $request
+     * @param ListTicketsRequest  $request
      * @param ListTicketsResponse $response
      *
-     * @return ListTicketsResponse|void
+     * @return ListTicketsResponse
+     * @throws UserNotFoundException
      */
     public function process(
         ListTicketsRequest $request,
         ListTicketsResponse $response
     ) {
-        $userId = $request->getUserId();
+        $user = $this->getUserFromRepository($request->getUserId());
+        $this->addTicketsFromUserToResponse($user, $response);
+        return $response;
+    }
+
+    /**
+     * @param $userId
+     *
+     * @return UserEntity
+     * @throws UserNotFoundException
+     */
+    private function getUserFromRepository($userId)
+    {
         $user = $this->_userRepository->findById($userId);
 
         if (!$user) {
-            return;
+            throw new UserNotFoundException();
         }
 
-        $tickets = $this->_ticketRepository->findByUserId($userId);
+        return $user;
+    }
+
+    /**
+     * @param UserEntity          $userEntity
+     * @param ListTicketsResponse $response
+     *
+     * @return ListTicketsResponse
+     */
+    private function addTicketsFromUserToResponse(UserEntity $userEntity, ListTicketsResponse $response)
+    {
+        $tickets = $this->_ticketRepository->findByUserId($userEntity->getId());
 
         foreach ($tickets as $ticket) {
             $ticketView = $this->_ticketViewFactory->create($ticket);
