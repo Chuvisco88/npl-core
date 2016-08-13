@@ -34,13 +34,15 @@ class TicketEntity
     /**
      * TicketEntity constructor.
      *
-     * @param UserEntity $buyer
-     * @param int $lanId
+     * @param UserEntity      $buyer
+     * @param                 $lanId
+     * @param UserEntity|null $holder
      */
-    public function __construct(UserEntity $buyer, $lanId)
+    public function __construct(UserEntity $buyer, $lanId, UserEntity $holder = null)
     {
         $this->_buyer = $buyer;
         $this->_lanId = $lanId;
+        $this->_holder = null === $holder ? $buyer : $holder;
     }
 
     /**
