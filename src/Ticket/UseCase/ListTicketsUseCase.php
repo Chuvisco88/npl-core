@@ -65,13 +65,7 @@ class ListTicketsUseCase
      */
     private function getUserFromRepository($userId)
     {
-        $user = $this->_userRepository->findById($userId);
-
-        if (!$user) {
-            throw new UserNotFoundException();
-        }
-
-        return $user;
+        return $this->_userRepository->findById($userId);
     }
 
     /**

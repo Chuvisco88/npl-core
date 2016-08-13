@@ -2,6 +2,8 @@
 
 namespace Npl\User\Tests\Fake\Repository;
 
+use Npl\User\Entity\UserEntity;
+use Npl\User\Exception\UserNotFoundException;
 use Npl\User\Repository\UserRepositoryInterface;
 
 /**
@@ -34,6 +36,12 @@ class FakeUserRepository implements UserRepositoryInterface
         return $this->_users;
     }
 
+    /**
+     * @param $userId
+     *
+     * @return UserEntity
+     * @throws UserNotFoundException
+     */
     public function findById($userId)
     {
         foreach ($this->_users as $user) {
@@ -41,5 +49,7 @@ class FakeUserRepository implements UserRepositoryInterface
                 return $user;
             }
         }
+
+        throw new UserNotFoundException();
     }
 }
