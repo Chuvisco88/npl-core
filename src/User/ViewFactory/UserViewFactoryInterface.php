@@ -3,6 +3,7 @@
 namespace Npl\User\ViewFactory;
 
 use Npl\User\Entity\UserEntity;
+use Npl\User\View\UserViewInterface;
 
 /**
  * Interface UserViewFactoryInterface
@@ -14,7 +15,7 @@ interface UserViewFactoryInterface
     /**
      * @param UserEntity $user
      *
-     * @return $this
+     * @return UserViewInterface
      */
     public function create(UserEntity $user);
 }

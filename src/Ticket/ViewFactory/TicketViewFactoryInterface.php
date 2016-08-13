@@ -3,6 +3,7 @@
 namespace Npl\Ticket\ViewFactory;
 
 use Npl\Ticket\Entity\TicketEntity;
+use Npl\Ticket\View\TicketViewInterface;
 
 /**
  * Interface TicketViewFactoryInterface
@@ -14,7 +15,7 @@ interface TicketViewFactoryInterface
     /**
      * @param TicketEntity $ticket
      *
-     * @return $this
+     * @return TicketViewInterface
      */
     public function create(TicketEntity $ticket);
 }
