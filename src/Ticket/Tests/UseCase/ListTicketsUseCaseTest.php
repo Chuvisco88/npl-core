@@ -12,6 +12,8 @@ use Npl\User\Tests\Fake\Repository\FakeUserRepository;
 
 class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
 {
+    const LAN_ID = 1;
+    const NUMBER_OF_TICKETS = 3;
     const USER_ID = 1;
 
     private $_user;
@@ -31,23 +33,24 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
 
     public function testCanSeeTickets()
     {
-        $users = [];
-        $users[] = $this->_user;
-
-        $lanId = 1;
         $tickets = [];
-        $ticket = new TicketEntity($this->_user, $lanId);
-        $ticket->setId(1);
-        $tickets[] = $ticket;
 
-        $response = $this->processUseCase($users, $tickets);
+        for ($ticketId = 1; $ticketId <= self::NUMBER_OF_TICKETS; $ticketId++) {
+            $ticket = new TicketEntity($this->_user, self::LAN_ID);
+            $ticket->setId($ticketId);
+            $tickets[] = $ticket;
+        }
+
+        $response = $this->processUseCase($tickets);
 
         static::assertNotEmpty($response->getTickets());
-        static::assertEquals(1, $this->count($response->getTickets()));
+        static::assertCount(self::NUMBER_OF_TICKETS, $response->getTickets());
     }
 
-    private function processUseCase(array $users = [], array $tickets = [])
+    private function processUseCase(array $tickets = [])
     {
+        $users = [];
+        $users[] = $this->_user;
         $userRepository = new FakeUserRepository($users);
 
         $ticketRepository = new FakeTicketRepository($tickets);
