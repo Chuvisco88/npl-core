@@ -22,11 +22,7 @@ class FakeTicketViewFactory implements TicketViewFactory
     {
         $ticketView = new TicketView();
         $ticketView->setBuyerName($ticket->getBuyer()->getNickname());
-        $holderName =
-            null !== $ticket->getHolder()
-            ? $ticket->getHolder()->getNickname()
-            : '';
-        $ticketView->setHolderName($holderName);
+        $ticketView->setHolderName($ticket->getHolder()->getNickname());
         $ticketView->setLanId($ticket->getLanId());
         return $ticketView;
     }
