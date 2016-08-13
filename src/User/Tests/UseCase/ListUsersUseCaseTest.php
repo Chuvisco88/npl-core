@@ -14,30 +14,27 @@ use Npl\User\Tests\Fake\ViewFactory\FakeUserViewFactory;
  */
 class ListUsersUseCaseTest extends \PHPUnit_Framework_TestCase
 {
-    public function testEmptyUsers()
+    private $_users = [];
+
+    public function testHasNoUsers()
     {
-        $userRepository = new FakeUserRepository();
-        $response = $this->processUseCase($userRepository);
+        $response = $this->processUseCase();
         static::assertEmpty($response->getUsers());
     }
 
-    public function testUsers()
+    public function testCanSeeUsers()
     {
-        $users = [];
-        $users[] = new UserEntity();
-        $userRepository = new FakeUserRepository($users);
-        $response = $this->processUseCase($userRepository);
+        $this->_users[] = new UserEntity();
+        $response = $this->processUseCase();
         static::assertNotEmpty($response->getUsers());
     }
 
     /**
-     * @param null $userRepository
-     *
      * @return FakeListUsersResponse
      */
-    private function processUseCase($userRepository)
+    private function processUseCase()
     {
-
+        $userRepository = new FakeUserRepository($this->_users);
         $userViewFactory = new FakeUserViewFactory();
         $response = new FakeListUsersResponse();
         $useCase = new ListUsersUseCase($userRepository, $userViewFactory);
