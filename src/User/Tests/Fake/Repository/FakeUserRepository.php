@@ -33,4 +33,13 @@ class FakeUserRepository implements UserRepository
     {
         return $this->_users;
     }
+
+    public function findById($userId)
+    {
+        foreach ($this->_users as $user) {
+            if ($user->getId() === $userId) {
+                return $user;
+            }
+        }
+    }
 }

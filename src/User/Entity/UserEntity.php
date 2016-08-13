@@ -10,6 +10,10 @@ namespace Npl\User\Entity;
 class UserEntity
 {
     /**
+     * @var int
+     */
+    private $_id;
+    /**
      * @var string
      */
     private $_email;
@@ -17,6 +21,25 @@ class UserEntity
      * @var string
      */
     private $_nickname;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->_id = $id;
+        return $this;
+    }
 
     /**
      * @return string

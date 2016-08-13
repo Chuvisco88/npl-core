@@ -13,4 +13,6 @@ interface UserRepository
      * @return mixed
      */
     public function findAll();
+
+    public function findById($userId);
 }
