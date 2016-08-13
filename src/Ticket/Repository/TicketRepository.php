@@ -12,7 +12,7 @@ interface TicketRepository
     /**
      * @param $userId
      *
-     * @return mixed
+     * @return array
      */
     public function findByUserId($userId);
 }
