@@ -28,47 +28,26 @@ class ListTicketsUseCase
      */
     private $_userRepository;
 
-    /**
-     * @param TicketRepository $ticketRepository
-     *
-     * @return $this
-     */
-    public function setTicketRepository(TicketRepository $ticketRepository)
-    {
+    public function __construct(
+        TicketRepository $ticketRepository,
+        TicketViewFactory $ticketViewFactory,
+        UserRepository $userRepository
+    ) {
         $this->_ticketRepository = $ticketRepository;
-        return $this;
-    }
-
-    /**
-     * @param TicketViewFactory $ticketViewFactory
-     *
-     * @return $this
-     */
-    public function setTicketViewFactory(TicketViewFactory $ticketViewFactory)
-    {
         $this->_ticketViewFactory = $ticketViewFactory;
-        return $this;
-    }
-
-    /**
-     * @param UserRepository $userRepository
-     *
-     * @return $this
-     */
-    public function setUserRepository(UserRepository $userRepository)
-    {
         $this->_userRepository = $userRepository;
-        return $this;
     }
 
     /**
-     * @param ListTicketsRequest  $request
+     * @param ListTicketsRequest $request
      * @param ListTicketsResponse $response
      *
      * @return ListTicketsResponse|void
      */
-    public function process(ListTicketsRequest $request, ListTicketsResponse $response)
-    {
+    public function process(
+        ListTicketsRequest $request,
+        ListTicketsResponse $response
+    ) {
         $userId = $request->getUserId();
         $user = $this->_userRepository->findById($userId);
 

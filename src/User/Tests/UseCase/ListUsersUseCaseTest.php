@@ -15,12 +15,6 @@ use Npl\User\Tests\Fake\ViewFactory\FakeUserViewFactory;
  */
 class ListUsersUseCaseTest extends \PHPUnit_Framework_TestCase
 {
-    public function testMissingDependency()
-    {
-        $this->setExpectedException(IllegalStateException::class);
-        $this->processUseCase();
-    }
-
     public function testEmptyUsers()
     {
         $userRepository = new FakeUserRepository();
@@ -42,16 +36,12 @@ class ListUsersUseCaseTest extends \PHPUnit_Framework_TestCase
      *
      * @return FakeListUsersResponse
      */
-    private function processUseCase($userRepository = null)
+    private function processUseCase($userRepository)
     {
 
         $userViewFactory = new FakeUserViewFactory();
         $response = new FakeListUsersResponse();
-        $useCase = new ListUsersUseCase();
-        if (null !== $userRepository) {
-            $useCase->setUserRepository($userRepository);
-        }
-        $useCase->setUserViewFactory($userViewFactory);
+        $useCase = new ListUsersUseCase($userRepository, $userViewFactory);
         $useCase->process($response);
         return $response;
     }

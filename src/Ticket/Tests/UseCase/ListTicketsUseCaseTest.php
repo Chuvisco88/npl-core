@@ -24,12 +24,13 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
         $tickets = [];
         $ticketRepository = new FakeTicketRepository($tickets);
 
+        $ticketViewFactory = new FakeTicketViewFactory();
+
         $request = new FakeListTicketsRequest($userId);
         $response = new FakeListTicketsResponse();
 
-        $useCase = new ListTicketsUseCase();
-        $useCase->setTicketRepository($ticketRepository);
-        $useCase->setUserRepository($userRepository);
+        $useCase = new ListTicketsUseCase($ticketRepository, $ticketViewFactory,
+            $userRepository);
         $useCase->process($request, $response);
 
         static::assertEmpty($response->getTickets());
@@ -56,10 +57,8 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
         $request = new FakeListTicketsRequest($userId);
         $response = new FakeListTicketsResponse();
 
-        $useCase = new ListTicketsUseCase();
-        $useCase->setTicketRepository($ticketRepository);
-        $useCase->setTicketViewFactory($ticketViewFactory);
-        $useCase->setUserRepository($userRepository);
+        $useCase = new ListTicketsUseCase($ticketRepository, $ticketViewFactory,
+            $userRepository);
         $useCase->process($request, $response);
 
         static::assertNotEmpty($response->getTickets());

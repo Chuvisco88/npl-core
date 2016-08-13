@@ -23,26 +23,10 @@ class ListUsersUseCase
      */
     private $_userViewFactory;
 
-    /**
-     * @param UserRepository $userRepository
-     *
-     * @return $this
-     */
-    public function setUserRepository(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, UserViewFactory $userViewFactory)
     {
         $this->_userRepository = $userRepository;
-        return $this;
-    }
-
-    /**
-     * @param UserViewFactory $userViewFactory
-     *
-     * @return $this
-     */
-    public function setUserViewFactory(UserViewFactory $userViewFactory)
-    {
         $this->_userViewFactory = $userViewFactory;
-        return $this;
     }
 
     /**
@@ -52,12 +36,6 @@ class ListUsersUseCase
      */
     public function process(ListUsersResponse $response)
     {
-        if (null === $this->_userRepository
-            || null === $this->_userViewFactory
-        ) {
-            throw new IllegalStateException('Missing dependency');
-        }
-
         // Check if user exists
         $users = $this->_userRepository->findAll();
 
