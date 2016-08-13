@@ -2,7 +2,6 @@
 
 namespace Npl\Ticket\Tests\Fake\Response;
 
-use Npl\Ticket\Response\ListTicketsResponseInterface;
 use Npl\Ticket\Response\ViewTicketResponseInterface;
 use Npl\Ticket\View\TicketView;
 

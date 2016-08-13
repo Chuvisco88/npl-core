@@ -7,8 +7,6 @@ use Npl\Ticket\Exception\TicketNotFoundException;
 use Npl\Ticket\Repository\TicketRepositoryInterface;
 use Npl\Ticket\Request\ViewTicketRequestInterface;
 use Npl\Ticket\Response\ViewTicketResponseInterface;
-use Npl\Ticket\Tests\Fake\Response\FakeViewTicketResponse;
-use Npl\Ticket\View\TicketView;
 use Npl\Ticket\ViewFactory\TicketViewFactoryInterface;
 
 /**
