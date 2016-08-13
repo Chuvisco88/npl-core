@@ -5,16 +5,16 @@ namespace Npl\User\ViewFactory;
 use Npl\User\Entity\UserEntity;
 
 /**
- * Interface UserViewFactory
+ * Interface UserViewFactoryInterface
  *
  * @package Npl\User\ViewFactory
  */
-interface UserViewFactory
+interface UserViewFactoryInterface
 {
     /**
      * @param UserEntity $user
      *
-     * @return mixed
+     * @return $this
      */
     public function create(UserEntity $user);
 }

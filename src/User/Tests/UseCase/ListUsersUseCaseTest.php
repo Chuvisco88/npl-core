@@ -4,9 +4,9 @@ namespace Npl\User\UseCase;
 
 use Npl\Core\Exception\IllegalStateException;
 use Npl\User\Entity\UserEntity;
-use Npl\User\Tests\Fake\Repository\FakeUserRepository;
-use Npl\User\Tests\Fake\Response\FakeListUsersResponse;
-use Npl\User\Tests\Fake\ViewFactory\FakeUserViewFactory;
+use Npl\User\Tests\Fake\Repository\FakeUserRepositoryInterface;
+use Npl\User\Tests\Fake\Response\FakeListUsersResponseInterface;
+use Npl\User\Tests\Fake\ViewFactory\FakeUserViewFactoryInterface;
 
 /**
  * Class ListUsersTest
@@ -17,7 +17,7 @@ class ListUsersUseCaseTest extends \PHPUnit_Framework_TestCase
 {
     public function testEmptyUsers()
     {
-        $userRepository = new FakeUserRepository();
+        $userRepository = new FakeUserRepositoryInterface();
         $response = $this->processUseCase($userRepository);
         static::assertEmpty($response->getUsers());
     }
@@ -26,7 +26,7 @@ class ListUsersUseCaseTest extends \PHPUnit_Framework_TestCase
     {
         $users = [];
         $users[] = new UserEntity();
-        $userRepository = new FakeUserRepository($users);
+        $userRepository = new FakeUserRepositoryInterface($users);
         $response = $this->processUseCase($userRepository);
         static::assertNotEmpty($response->getUsers());
     }
@@ -34,13 +34,13 @@ class ListUsersUseCaseTest extends \PHPUnit_Framework_TestCase
     /**
      * @param null $userRepository
      *
-     * @return FakeListUsersResponse
+     * @return FakeListUsersResponseInterface
      */
     private function processUseCase($userRepository)
     {
 
-        $userViewFactory = new FakeUserViewFactory();
-        $response = new FakeListUsersResponse();
+        $userViewFactory = new FakeUserViewFactoryInterface();
+        $response = new FakeListUsersResponseInterface();
         $useCase = new ListUsersUseCase($userRepository, $userViewFactory);
         $useCase->process($response);
         return $response;

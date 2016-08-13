@@ -3,9 +3,9 @@
 namespace Npl\User\UseCase;
 
 use Npl\Core\Exception\IllegalStateException;
-use Npl\User\Repository\UserRepository;
-use Npl\User\Response\ListUsersResponse;
-use Npl\User\ViewFactory\UserViewFactory;
+use Npl\User\Repository\UserRepositoryInterface;
+use Npl\User\Response\ListUsersResponseInterface;
+use Npl\User\ViewFactory\UserViewFactoryInterface;
 
 /**
  * Class ListUsersUseCase
@@ -15,26 +15,26 @@ use Npl\User\ViewFactory\UserViewFactory;
 class ListUsersUseCase
 {
     /**
-     * @var UserRepository
+     * @var UserRepositoryInterface
      */
     private $_userRepository;
     /**
-     * @var UserViewFactory
+     * @var UserViewFactoryInterface
      */
     private $_userViewFactory;
 
-    public function __construct(UserRepository $userRepository, UserViewFactory $userViewFactory)
+    public function __construct(UserRepositoryInterface $userRepository, UserViewFactoryInterface $userViewFactory)
     {
         $this->_userRepository = $userRepository;
         $this->_userViewFactory = $userViewFactory;
     }
 
     /**
-     * @param ListUsersResponse $response
+     * @param ListUsersResponseInterface $response
      *
      * @throws IllegalStateException
      */
-    public function process(ListUsersResponse $response)
+    public function process(ListUsersResponseInterface $response)
     {
         // Check if user exists
         $users = $this->_userRepository->findAll();

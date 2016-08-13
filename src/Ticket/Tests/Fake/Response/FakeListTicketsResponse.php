@@ -2,7 +2,7 @@
 
 namespace Npl\Ticket\Tests\Fake\Response;
 
-use Npl\Ticket\Response\ListTicketsResponse;
+use Npl\Ticket\Response\ListTicketsResponseInterface;
 use Npl\Ticket\View\TicketView;
 
 /**
@@ -10,7 +10,7 @@ use Npl\Ticket\View\TicketView;
  *
  * @package Npl\Ticket\Tests\Fake\Response
  */
-class FakeListTicketsResponse implements ListTicketsResponse
+class FakeListTicketsResponseInterface implements ListTicketsResponseInterface
 {
     /**
      * @var array

@@ -4,14 +4,14 @@ namespace Npl\Ticket\Tests\Fake\ViewFactory;
 
 use Npl\Ticket\Entity\TicketEntity;
 use Npl\Ticket\View\TicketView;
-use Npl\Ticket\ViewFactory\TicketViewFactory;
+use Npl\Ticket\ViewFactory\TicketViewFactoryInterface;
 
 /**
  * Class FakeTicketViewFactory
  *
  * @package Npl\Ticket\Tests\Fake\ViewFactory
  */
-class FakeTicketViewFactory implements TicketViewFactory
+class FakeTicketViewFactoryInterface implements TicketViewFactoryInterface
 {
     /**
      * @param TicketEntity $ticket

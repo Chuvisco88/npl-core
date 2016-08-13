@@ -2,14 +2,14 @@
 
 namespace Npl\User\Tests\Fake\Repository;
 
-use Npl\User\Repository\UserRepository;
+use Npl\User\Repository\UserRepositoryInterface;
 
 /**
  * Class FakeUserRepository
  *
  * @package Npl\User\Tests\Fake\Repository
  */
-class FakeUserRepository implements UserRepository
+class FakeUserRepositoryInterface implements UserRepositoryInterface
 {
     /**
      * @var array

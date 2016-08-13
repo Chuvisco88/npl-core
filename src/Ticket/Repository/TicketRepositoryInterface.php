@@ -3,11 +3,11 @@
 namespace Npl\Ticket\Repository;
 
 /**
- * Interface TicketRepository
+ * Interface TicketRepositoryInterface
  *
  * @package Npl\Ticket\Repository
  */
-interface TicketRepository
+interface TicketRepositoryInterface
 {
     /**
      * @param $userId

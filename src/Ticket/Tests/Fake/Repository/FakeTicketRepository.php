@@ -2,14 +2,14 @@
 
 namespace Npl\Ticket\Tests\Fake\Repository;
 
-use Npl\Ticket\Repository\TicketRepository;
+use Npl\Ticket\Repository\TicketRepositoryInterface;
 
 /**
  * Class FakeTicketRepository
  *
  * @package Npl\Ticket\Tests\Fake\Repository
  */
-class FakeTicketRepository implements TicketRepository
+class FakeTicketRepositoryInterface implements TicketRepositoryInterface
 {
     /**
      * @var array

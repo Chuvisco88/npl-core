@@ -5,16 +5,16 @@ namespace Npl\Ticket\ViewFactory;
 use Npl\Ticket\Entity\TicketEntity;
 
 /**
- * Interface TicketViewFactory
+ * Interface TicketViewFactoryInterface
  *
  * @package Npl\Ticket\ViewFactory
  */
-interface TicketViewFactory
+interface TicketViewFactoryInterface
 {
     /**
      * @param TicketEntity $ticket
      *
-     * @return mixed
+     * @return $this
      */
     public function create(TicketEntity $ticket);
 }

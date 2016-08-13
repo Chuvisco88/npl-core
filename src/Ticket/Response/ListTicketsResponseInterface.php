@@ -5,21 +5,21 @@ namespace Npl\Ticket\Response;
 use Npl\Ticket\View\TicketView;
 
 /**
- * Interface ListTicketsResponse
+ * Interface ListTicketsResponseInterface
  *
  * @package Npl\Ticket\Response
  */
-interface ListTicketsResponse
+interface ListTicketsResponseInterface
 {
     /**
      * @param TicketView $ticketView
      *
-     * @return mixed
+     * @return $this
      */
     public function addTicket(TicketView $ticketView);
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getTickets();
 }

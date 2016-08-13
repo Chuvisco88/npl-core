@@ -3,10 +3,10 @@
 namespace Npl\User\Request;
 
 /**
- * Interface ListUsersRequest
+ * Interface ListUsersRequestInterface
  *
  * @package Npl\User\Request
  */
-interface ListUsersRequest
+interface ListUsersRequestInterface
 {
 }

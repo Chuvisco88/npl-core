@@ -3,13 +3,13 @@
 namespace Npl\Ticket\UseCase;
 
 use Npl\Ticket\Entity\TicketEntity;
-use Npl\Ticket\Tests\Fake\Repository\FakeTicketRepository;
-use Npl\Ticket\Tests\Fake\Request\FakeListTicketsRequest;
-use Npl\Ticket\Tests\Fake\Response\FakeListTicketsResponse;
-use Npl\Ticket\Tests\Fake\ViewFactory\FakeTicketViewFactory;
+use Npl\Ticket\Tests\Fake\Repository\FakeTicketRepositoryInterface;
+use Npl\Ticket\Tests\Fake\Request\FakeListTicketsRequestInterface;
+use Npl\Ticket\Tests\Fake\Response\FakeListTicketsResponseInterface;
+use Npl\Ticket\Tests\Fake\ViewFactory\FakeTicketViewFactoryInterface;
 use Npl\User\Entity\UserEntity;
 use Npl\User\Exception\UserNotFoundException;
-use Npl\User\Tests\Fake\Repository\FakeUserRepository;
+use Npl\User\Tests\Fake\Repository\FakeUserRepositoryInterface;
 
 class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
 {
@@ -60,14 +60,14 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
 
     private function processUseCase(array $tickets = [])
     {
-        $userRepository = new FakeUserRepository($this->_users);
+        $userRepository = new FakeUserRepositoryInterface($this->_users);
 
-        $ticketRepository = new FakeTicketRepository($tickets);
+        $ticketRepository = new FakeTicketRepositoryInterface($tickets);
 
-        $ticketViewFactory = new FakeTicketViewFactory();
+        $ticketViewFactory = new FakeTicketViewFactoryInterface();
 
-        $request = new FakeListTicketsRequest(self::USER_ID);
-        $response = new FakeListTicketsResponse();
+        $request = new FakeListTicketsRequestInterface(self::USER_ID);
+        $response = new FakeListTicketsResponseInterface();
 
         $useCase = new ListTicketsUseCase($ticketRepository, $ticketViewFactory,
             $userRepository);

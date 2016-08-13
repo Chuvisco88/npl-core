@@ -2,14 +2,14 @@
 
 namespace Npl\Ticket\Tests\Fake\Request;
 
-use Npl\Ticket\Request\ListTicketsRequest;
+use Npl\Ticket\Request\ListTicketsRequestInterface;
 
 /**
  * Class FakeListTicketsRequest
  *
  * @package Npl\Ticket\Tests\Fake\Request
  */
-class FakeListTicketsRequest implements ListTicketsRequest
+class FakeListTicketsRequestInterface implements ListTicketsRequestInterface
 {
     /**
      * @var int

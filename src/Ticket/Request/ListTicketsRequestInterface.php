@@ -3,11 +3,11 @@
 namespace Npl\Ticket\Request;
 
 /**
- * Interface ListTicketsRequest
+ * Interface ListTicketsRequestInterface
  *
  * @package Npl\Ticket\Request
  */
-interface ListTicketsRequest
+interface ListTicketsRequestInterface
 {
     /**
      * ListTicketsRequest constructor.

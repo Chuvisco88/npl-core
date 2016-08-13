@@ -2,7 +2,7 @@
 
 namespace Npl\User\Tests\Fake\Response;
 
-use Npl\User\Response\ListUsersResponse;
+use Npl\User\Response\ListUsersResponseInterface;
 use Npl\User\View\UserView;
 
 /**
@@ -10,7 +10,7 @@ use Npl\User\View\UserView;
  *
  * @package Npl\User\Tests\Fake\Response
  */
-class FakeListUsersResponse implements ListUsersResponse
+class FakeListUsersResponseInterface implements ListUsersResponseInterface
 {
     /**
      * @var array

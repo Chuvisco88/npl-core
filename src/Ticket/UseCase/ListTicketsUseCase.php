@@ -2,13 +2,13 @@
 
 namespace Npl\Ticket\UseCase;
 
-use Npl\Ticket\Repository\TicketRepository;
-use Npl\Ticket\Request\ListTicketsRequest;
-use Npl\Ticket\Response\ListTicketsResponse;
-use Npl\Ticket\ViewFactory\TicketViewFactory;
+use Npl\Ticket\Repository\TicketRepositoryInterface;
+use Npl\Ticket\Request\ListTicketsRequestInterface;
+use Npl\Ticket\Response\ListTicketsResponseInterface;
+use Npl\Ticket\ViewFactory\TicketViewFactoryInterface;
 use Npl\User\Entity\UserEntity;
 use Npl\User\Exception\UserNotFoundException;
-use Npl\User\Repository\UserRepository;
+use Npl\User\Repository\UserRepositoryInterface;
 
 /**
  * Class ListTicketsUseCase
@@ -18,22 +18,22 @@ use Npl\User\Repository\UserRepository;
 class ListTicketsUseCase
 {
     /**
-     * @var TicketRepository
+     * @var TicketRepositoryInterface
      */
     private $_ticketRepository;
     /**
-     * @var TicketViewFactory
+     * @var TicketViewFactoryInterface
      */
     private $_ticketViewFactory;
     /**
-     * @var UserRepository
+     * @var UserRepositoryInterface
      */
     private $_userRepository;
 
     public function __construct(
-        TicketRepository $ticketRepository,
-        TicketViewFactory $ticketViewFactory,
-        UserRepository $userRepository
+        TicketRepositoryInterface $ticketRepository,
+        TicketViewFactoryInterface $ticketViewFactory,
+        UserRepositoryInterface $userRepository
     ) {
         $this->_ticketRepository = $ticketRepository;
         $this->_ticketViewFactory = $ticketViewFactory;
@@ -41,15 +41,15 @@ class ListTicketsUseCase
     }
 
     /**
-     * @param ListTicketsRequest  $request
-     * @param ListTicketsResponse $response
+     * @param ListTicketsRequestInterface  $request
+     * @param ListTicketsResponseInterface $response
      *
-     * @return ListTicketsResponse
+     * @return ListTicketsResponseInterface
      * @throws UserNotFoundException
      */
     public function process(
-        ListTicketsRequest $request,
-        ListTicketsResponse $response
+        ListTicketsRequestInterface $request,
+        ListTicketsResponseInterface $response
     ) {
         $user = $this->getUserFromRepository($request->getUserId());
         $tickets = $this->getTicketsFromRepositoryByUser($user);
@@ -85,12 +85,12 @@ class ListTicketsUseCase
     }
 
     /**
-     * @param array               $tickets
-     * @param ListTicketsResponse $response
+     * @param array                        $tickets
+     * @param ListTicketsResponseInterface $response
      *
-     * @return ListTicketsResponse
+     * @return ListTicketsResponseInterface
      */
-    private function addTicketsFromUserToResponse(array $tickets, ListTicketsResponse $response)
+    private function addTicketsFromUserToResponse(array $tickets, ListTicketsResponseInterface $response)
     {
         foreach ($tickets as $ticket) {
             $ticketView = $this->_ticketViewFactory->create($ticket);

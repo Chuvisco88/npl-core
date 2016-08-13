@@ -5,21 +5,21 @@ namespace Npl\User\Response;
 use Npl\User\View\UserView;
 
 /**
- * Interface ListUsersResponse
+ * Interface ListUsersResponseInterface
  *
  * @package Npl\User\Response
  */
-interface ListUsersResponse
+interface ListUsersResponseInterface
 {
     /**
      * @param UserView $userView
      *
-     * @return mixed
+     * @return $this
      */
     public function addUser(UserView $userView);
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getUsers();
 }

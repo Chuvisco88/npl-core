@@ -4,14 +4,14 @@ namespace Npl\User\Tests\Fake\ViewFactory;
 
 use Npl\User\Entity\UserEntity;
 use Npl\User\Tests\Fake\View\FakeUserView;
-use Npl\User\ViewFactory\UserViewFactory;
+use Npl\User\ViewFactory\UserViewFactoryInterface;
 
 /**
  * Class FakeUserViewFactory
  *
  * @package Npl\User\Tests\Fake\ViewFactory
  */
-class FakeUserViewFactory implements UserViewFactory
+class FakeUserViewFactoryInterface implements UserViewFactoryInterface
 {
     /**
      * @param UserEntity $user
