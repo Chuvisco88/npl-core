@@ -17,11 +17,13 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
     const USER_ID = 1;
 
     private $_user;
+    private $_users = [];
 
     public function setUp()
     {
         $this->_user = new UserEntity();
         $this->_user->setId(self::USER_ID);
+        $this->_users[] = $this->_user;
     }
 
     public function testHasNoTickets()
@@ -49,9 +51,7 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
 
     private function processUseCase(array $tickets = [])
     {
-        $users = [];
-        $users[] = $this->_user;
-        $userRepository = new FakeUserRepository($users);
+        $userRepository = new FakeUserRepository($this->_users);
 
         $ticketRepository = new FakeTicketRepository($tickets);
 
