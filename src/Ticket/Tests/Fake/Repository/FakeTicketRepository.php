@@ -9,7 +9,7 @@ use Npl\Ticket\Repository\TicketRepositoryInterface;
  *
  * @package Npl\Ticket\Tests\Fake\Repository
  */
-class FakeTicketRepositoryInterface implements TicketRepositoryInterface
+class FakeTicketRepository implements TicketRepositoryInterface
 {
     /**
      * @var array

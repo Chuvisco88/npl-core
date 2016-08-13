@@ -9,7 +9,7 @@ use Npl\User\Repository\UserRepositoryInterface;
  *
  * @package Npl\User\Tests\Fake\Repository
  */
-class FakeUserRepositoryInterface implements UserRepositoryInterface
+class FakeUserRepository implements UserRepositoryInterface
 {
     /**
      * @var array

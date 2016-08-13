@@ -10,7 +10,7 @@ use Npl\User\View\UserView;
  *
  * @package Npl\User\Tests\Fake\Response
  */
-class FakeListUsersResponseInterface implements ListUsersResponseInterface
+class FakeListUsersResponse implements ListUsersResponseInterface
 {
     /**
      * @var array

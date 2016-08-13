@@ -11,7 +11,7 @@ use Npl\Ticket\ViewFactory\TicketViewFactoryInterface;
  *
  * @package Npl\Ticket\Tests\Fake\ViewFactory
  */
-class FakeTicketViewFactoryInterface implements TicketViewFactoryInterface
+class FakeTicketViewFactory implements TicketViewFactoryInterface
 {
     /**
      * @param TicketEntity $ticket

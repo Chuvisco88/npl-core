@@ -9,7 +9,7 @@ use Npl\Ticket\Request\ListTicketsRequestInterface;
  *
  * @package Npl\Ticket\Tests\Fake\Request
  */
-class FakeListTicketsRequestInterface implements ListTicketsRequestInterface
+class FakeListTicketsRequest implements ListTicketsRequestInterface
 {
     /**
      * @var int

@@ -9,6 +9,6 @@ use Npl\User\Request\ListUsersRequestInterface;
  *
  * @package Npl\User\Tests\Fake\Request
  */
-class FakeListUsersRequestInterface implements ListUsersRequestInterface
+class FakeListUsersRequest implements ListUsersRequestInterface
 {
 }

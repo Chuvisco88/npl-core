@@ -11,7 +11,7 @@ use Npl\User\ViewFactory\UserViewFactoryInterface;
  *
  * @package Npl\User\Tests\Fake\ViewFactory
  */
-class FakeUserViewFactoryInterface implements UserViewFactoryInterface
+class FakeUserViewFactory implements UserViewFactoryInterface
 {
     /**
      * @param UserEntity $user

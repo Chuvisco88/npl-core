@@ -10,7 +10,7 @@ use Npl\Ticket\View\TicketView;
  *
  * @package Npl\Ticket\Tests\Fake\Response
  */
-class FakeListTicketsResponseInterface implements ListTicketsResponseInterface
+class FakeListTicketsResponse implements ListTicketsResponseInterface
 {
     /**
      * @var array
