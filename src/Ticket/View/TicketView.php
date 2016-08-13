@@ -18,9 +18,9 @@ class TicketView implements TicketViewInterface
      */
     private $_holderName;
     /**
-     * @var int
+     * @var string
      */
-    private $_lanId;
+    private $_lanName;
 
     /**
      * @return string
@@ -61,21 +61,21 @@ class TicketView implements TicketViewInterface
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getLanId()
+    public function getLanName()
     {
-        return $this->_lanId;
+        return $this->_lanName;
     }
 
     /**
-     * @param int $lanId
+     * @param string $lanName
      *
      * @return $this
      */
-    public function setLanId($lanId)
+    public function setLanName($lanName)
     {
-        $this->_lanId = $lanId;
+        $this->_lanName = $lanName;
         return $this;
     }
 }

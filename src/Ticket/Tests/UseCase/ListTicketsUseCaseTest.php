@@ -2,6 +2,7 @@
 
 namespace Npl\Ticket\UseCase;
 
+use Npl\Lan\Entity\LanEntity;
 use Npl\Ticket\Entity\TicketEntity;
 use Npl\Ticket\Tests\Fake\Repository\FakeTicketRepository;
 use Npl\Ticket\Tests\Fake\Request\FakeListTicketsRequest;
@@ -17,12 +18,15 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
     const NUMBER_OF_TICKETS = 3;
     const USER_ID = 1;
 
+    private $_lan;
     private $_user;
     private $_users = [];
     private $_tickets = [];
 
     public function setUp()
     {
+        $this->_lan = new LanEntity('noprobLan vX.Y',
+            new \DateTime('yesterday 18:00'), new \DateTime('tomorrow 16:00'));
         $this->_user = new UserEntity();
         $this->_user->setId(self::USER_ID);
         $this->_users[] = $this->_user;
@@ -78,7 +82,7 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
     private function addTickets($numberOfTickets)
     {
         for ($ticketId = 1; $ticketId <= $numberOfTickets; $ticketId++) {
-            $ticket = new TicketEntity($this->_user, self::LAN_ID);
+            $ticket = new TicketEntity($this->_user, $this->_lan);
             $ticket->setId($ticketId);
             $this->_tickets[] = $ticket;
         }

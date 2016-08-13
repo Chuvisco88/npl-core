@@ -2,6 +2,7 @@
 
 namespace Npl\Ticket\Entity;
 
+use Npl\Lan\Entity\LanEntity;
 use Npl\User\Entity\UserEntity;
 
 /**
@@ -27,21 +28,21 @@ class TicketEntity
     private $_holder;
 
     /**
-     * @var int
+     * @var LanEntity
      */
-    private $_lanId;
+    private $_lan;
 
     /**
      * TicketEntity constructor.
      *
      * @param UserEntity      $buyer
-     * @param                 $lanId
+     * @param LanEntity       $lan
      * @param UserEntity|null $holder
      */
-    public function __construct(UserEntity $buyer, $lanId, UserEntity $holder = null)
+    public function __construct(UserEntity $buyer, LanEntity $lan, UserEntity $holder = null)
     {
         $this->_buyer = $buyer;
-        $this->_lanId = $lanId;
+        $this->_lan = $lan;
         $this->_holder = null === $holder ? $buyer : $holder;
     }
 
@@ -94,19 +95,19 @@ class TicketEntity
     /**
      * @return int
      */
-    public function getLanId()
+    public function getLan()
     {
-        return $this->_lanId;
+        return $this->_lan;
     }
 
     /**
-     * @param int $lanId
+     * @param LanEntity $lanEntity
      *
      * @return $this
      */
-    public function setLanId($lanId)
+    public function setLan(LanEntity $lanEntity)
     {
-        $this->_lanId = $lanId;
+        $this->_lan = $lanEntity;
         return $this;
     }
 }

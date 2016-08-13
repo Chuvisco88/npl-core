@@ -23,7 +23,7 @@ class FakeTicketViewFactory implements TicketViewFactoryInterface
         $ticketView = new TicketView();
         $ticketView->setBuyerName($ticket->getBuyer()->getNickname());
         $ticketView->setHolderName($ticket->getHolder()->getNickname());
-        $ticketView->setLanId($ticket->getLanId());
+        $ticketView->setLanName($ticket->getLan()->getName());
         return $ticketView;
     }
 }
