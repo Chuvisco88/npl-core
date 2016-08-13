@@ -21,8 +21,12 @@ class FakeTicketViewFactory implements TicketViewFactory
     public function create(TicketEntity $ticket)
     {
         $ticketView = new TicketView();
-        $ticketView->setBuyerId($ticket->getBuyerId());
-        $ticketView->setHolderId($ticket->getHolderId());
+        $ticketView->setBuyerName($ticket->getBuyer()->getNickname());
+        $holderName =
+            null !== $ticket->getHolder()
+            ? $ticket->getHolder()->getNickname()
+            : '';
+        $ticketView->setHolderName($holderName);
         $ticketView->setLanId($ticket->getLanId());
         return $ticketView;
     }

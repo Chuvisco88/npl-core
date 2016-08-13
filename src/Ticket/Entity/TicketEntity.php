@@ -2,6 +2,8 @@
 
 namespace Npl\Ticket\Entity;
 
+use Npl\User\Entity\UserEntity;
+
 /**
  * Class TicketEntity
  *
@@ -15,14 +17,14 @@ class TicketEntity
     private $_id;
 
     /**
-     * @var int
+     * @var UserEntity
      */
-    private $_buyerId;
+    private $_buyer;
 
     /**
-     * @var int
+     * @var UserEntity
      */
-    private $_holderId;
+    private $_holder;
 
     /**
      * @var int
@@ -32,12 +34,12 @@ class TicketEntity
     /**
      * TicketEntity constructor.
      *
-     * @param int $buyerId
+     * @param UserEntity $buyer
      * @param int $lanId
      */
-    public function __construct($buyerId, $lanId)
+    public function __construct(UserEntity $buyer, $lanId)
     {
-        $this->_buyerId = $buyerId;
+        $this->_buyer = $buyer;
         $this->_lanId = $lanId;
     }
 
@@ -61,29 +63,29 @@ class TicketEntity
     }
 
     /**
-     * @return int
+     * @return UserEntity
      */
-    public function getBuyerId()
+    public function getBuyer()
     {
-        return $this->_buyerId;
+        return $this->_buyer;
     }
 
     /**
-     * @return int
+     * @return UserEntity
      */
-    public function getHolderId()
+    public function getHolder()
     {
-        return $this->_holderId;
+        return $this->_holder;
     }
 
     /**
-     * @param int $holderId
+     * @param UserEntity $holder
      *
      * @return $this
      */
-    public function setHolderId($holderId)
+    public function setHolder(UserEntity $holder)
     {
-        $this->_holderId = $holderId;
+        $this->_holder = $holder;
         return $this;
     }
 

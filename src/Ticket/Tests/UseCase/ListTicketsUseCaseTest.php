@@ -14,6 +14,14 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
 {
     const USER_ID = 1;
 
+    private $_user;
+
+    public function setUp()
+    {
+        $this->_user = new UserEntity();
+        $this->_user->setId(self::USER_ID);
+    }
+
     public function testHasNoTickets()
     {
         $response = $this->processUseCase();
@@ -24,13 +32,11 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
     public function testCanSeeTickets()
     {
         $users = [];
-        $user = new UserEntity();
-        $user->setId(self::USER_ID);
-        $users[] = $user;
+        $users[] = $this->_user;
 
         $lanId = 1;
         $tickets = [];
-        $ticket = new TicketEntity(self::USER_ID, $lanId);
+        $ticket = new TicketEntity($this->_user, $lanId);
         $ticket->setId(1);
         $tickets[] = $ticket;
 

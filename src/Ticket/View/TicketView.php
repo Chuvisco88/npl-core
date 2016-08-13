@@ -10,54 +10,54 @@ namespace Npl\Ticket\View;
 class TicketView
 {
     /**
-     * @var int
+     * @var string
      */
-    private $_buyerId;
+    private $_buyerName;
     /**
-     * @var int
+     * @var string
      */
-    private $_holderId;
+    private $_holderName;
     /**
      * @var int
      */
     private $_lanId;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getBuyerId()
+    public function getBuyerName()
     {
-        return $this->_buyerId;
+        return $this->_buyerName;
     }
 
     /**
-     * @param int $buyerId
+     * @param string $buyerName
      *
      * @return $this
      */
-    public function setBuyerId($buyerId)
+    public function setBuyerName($buyerName)
     {
-        $this->_buyerId = $buyerId;
+        $this->_buyerName = $buyerName;
         return $this;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getHolderId()
+    public function getHolderName()
     {
-        return $this->_holderId;
+        return $this->_holderName;
     }
 
     /**
-     * @param int $holderId
+     * @param string $holderName
      *
-     * @return int
+     * @return $this
      */
-    public function setHolderId($holderId)
+    public function setHolderName($holderName)
     {
-        $this->_holderId = $holderId;
-        return $this->_holderId;
+        $this->_holderName = $holderName;
+        return $this;
     }
 
     /**
