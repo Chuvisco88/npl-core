@@ -7,7 +7,7 @@ namespace Npl\User\View;
  *
  * @package Npl\User\View
  */
-class UserView
+class UserView implements UserViewInterface
 {
     /**
      * @var string
