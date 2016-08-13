@@ -12,56 +12,49 @@ use Npl\User\Tests\Fake\Repository\FakeUserRepository;
 
 class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
 {
+    const USER_ID = 1;
+
     public function testHasNoTickets()
     {
-        $userId = 1;
-        $users = [];
-        $user = new UserEntity();
-        $user->setId($userId);
-        $users[] = $user;
-        $userRepository = new FakeUserRepository($users);
-
-        $tickets = [];
-        $ticketRepository = new FakeTicketRepository($tickets);
-
-        $ticketViewFactory = new FakeTicketViewFactory();
-
-        $request = new FakeListTicketsRequest($userId);
-        $response = new FakeListTicketsResponse();
-
-        $useCase = new ListTicketsUseCase($ticketRepository, $ticketViewFactory,
-            $userRepository);
-        $useCase->process($request, $response);
+        $response = $this->processUseCase();
 
         static::assertEmpty($response->getTickets());
     }
 
     public function testCanSeeTickets()
     {
-        $userId = 1;
         $users = [];
         $user = new UserEntity();
-        $user->setId($userId);
+        $user->setId(self::USER_ID);
         $users[] = $user;
-        $userRepository = new FakeUserRepository($users);
 
         $lanId = 1;
         $tickets = [];
-        $ticket = new TicketEntity($userId, $lanId);
+        $ticket = new TicketEntity(self::USER_ID, $lanId);
         $ticket->setId(1);
         $tickets[] = $ticket;
+
+        $response = $this->processUseCase($users, $tickets);
+
+        static::assertNotEmpty($response->getTickets());
+        static::assertEquals(1, $this->count($response->getTickets()));
+    }
+
+    private function processUseCase(array $users = [], array $tickets = [])
+    {
+        $userRepository = new FakeUserRepository($users);
+
         $ticketRepository = new FakeTicketRepository($tickets);
 
         $ticketViewFactory = new FakeTicketViewFactory();
 
-        $request = new FakeListTicketsRequest($userId);
+        $request = new FakeListTicketsRequest(self::USER_ID);
         $response = new FakeListTicketsResponse();
 
         $useCase = new ListTicketsUseCase($ticketRepository, $ticketViewFactory,
             $userRepository);
         $useCase->process($request, $response);
 
-        static::assertNotEmpty($response->getTickets());
-        static::assertEquals(1, $this->count($response->getTickets()));
+        return $response;
     }
 }
