@@ -8,6 +8,7 @@ use Npl\Ticket\Tests\Fake\Request\FakeListTicketsRequest;
 use Npl\Ticket\Tests\Fake\Response\FakeListTicketsResponse;
 use Npl\Ticket\Tests\Fake\ViewFactory\FakeTicketViewFactory;
 use Npl\User\Entity\UserEntity;
+use Npl\User\Exception\UserNotFoundException;
 use Npl\User\Tests\Fake\Repository\FakeUserRepository;
 
 class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
@@ -47,6 +48,14 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
 
         static::assertNotEmpty($response->getTickets());
         static::assertCount(self::NUMBER_OF_TICKETS, $response->getTickets());
+    }
+
+    public function testUserNotFoundException()
+    {
+        $this->setExpectedException(UserNotFoundException::class);
+
+        $this->_users = [];
+        $this->processUseCase();
     }
 
     private function processUseCase(array $tickets = [])
