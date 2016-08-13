@@ -2,6 +2,8 @@
 
 namespace Npl\Ticket\Tests\Fake\Repository;
 
+use Npl\Ticket\Entity\TicketEntity;
+use Npl\Ticket\Exception\TicketNotFoundException;
 use Npl\Ticket\Repository\TicketRepositoryInterface;
 
 /**
@@ -24,6 +26,23 @@ class FakeTicketRepository implements TicketRepositoryInterface
     public function __construct(array $tickets = [])
     {
         $this->_tickets = $tickets;
+    }
+
+    /**
+     * @param $ticketId
+     *
+     * @return TicketEntity
+     * @throws TicketNotFoundException
+     */
+    public function findById($ticketId)
+    {
+        foreach ($this->_tickets as $ticket) {
+            if ($ticket->getId() === $ticketId) {
+                return $ticket;
+            }
+        }
+
+        throw new TicketNotFoundException();
     }
 
     /**
