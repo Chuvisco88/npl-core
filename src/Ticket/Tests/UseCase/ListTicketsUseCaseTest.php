@@ -19,6 +19,7 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
 
     private $_user;
     private $_users = [];
+    private $_tickets = [];
 
     public function setUp()
     {
@@ -36,15 +37,9 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
 
     public function testCanSeeTickets()
     {
-        $tickets = [];
+        $this->addTickets(self::NUMBER_OF_TICKETS);
 
-        for ($ticketId = 1; $ticketId <= self::NUMBER_OF_TICKETS; $ticketId++) {
-            $ticket = new TicketEntity($this->_user, self::LAN_ID);
-            $ticket->setId($ticketId);
-            $tickets[] = $ticket;
-        }
-
-        $response = $this->processUseCase($tickets);
+        $response = $this->processUseCase();
 
         static::assertNotEmpty($response->getTickets());
         static::assertCount(self::NUMBER_OF_TICKETS, $response->getTickets());
@@ -55,17 +50,18 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException(UserNotFoundException::class);
 
         $this->_users = [];
+
         $this->processUseCase();
     }
 
-    private function processUseCase(array $tickets = [])
+    /**
+     * @return FakeListTicketsResponse
+     */
+    private function processUseCase()
     {
         $userRepository = new FakeUserRepository($this->_users);
-
-        $ticketRepository = new FakeTicketRepository($tickets);
-
+        $ticketRepository = new FakeTicketRepository($this->_tickets);
         $ticketViewFactory = new FakeTicketViewFactory();
-
         $request = new FakeListTicketsRequest(self::USER_ID);
         $response = new FakeListTicketsResponse();
 
@@ -74,5 +70,17 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
         $useCase->process($request, $response);
 
         return $response;
+    }
+
+    /**
+     * @param $numberOfTickets
+     */
+    private function addTickets($numberOfTickets)
+    {
+        for ($ticketId = 1; $ticketId <= $numberOfTickets; $ticketId++) {
+            $ticket = new TicketEntity($this->_user, self::LAN_ID);
+            $ticket->setId($ticketId);
+            $this->_tickets[] = $ticket;
+        }
     }
 }
