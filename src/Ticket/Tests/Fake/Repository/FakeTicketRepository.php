@@ -66,4 +66,20 @@ class FakeTicketRepository implements TicketRepositoryInterface
     {
         return $this->_tickets;
     }
+
+    public function findByLanIdAndUserId($lanId, $userId)
+    {
+        $tickets = [];
+
+        foreach ($this->_tickets as $ticket) {
+            $buyer = $ticket->getBuyer();
+            $lan = $ticket->getLan();
+
+            if ($lan->getId() === $lanId && $buyer->getId() === $userId) {
+                $tickets[] = $ticket;
+            }
+        }
+
+        return $tickets;
+    }
 }

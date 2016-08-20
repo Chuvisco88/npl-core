@@ -26,4 +26,12 @@ interface TicketRepositoryInterface
      * @return TicketEntity[]
      */
     public function findByUserId($userId);
+
+    /**
+     * @param $lanId
+     * @param $userId
+     *
+     * @return TicketEntity[]
+     */
+    public function findByLanIdAndUserId($lanId, $userId);
 }

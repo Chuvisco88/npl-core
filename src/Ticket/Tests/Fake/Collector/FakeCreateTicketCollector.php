@@ -40,7 +40,7 @@ class FakeCreateTicketCollector implements CreateTicketCollectorInterface
 
     public function findTicketsByLanAndUser($lanId, $userId)
     {
-        // TODO: Implement findTicketsByLanAndUser() method.
+        return $this->_ticketRepository->findByLanIdAndUserId($lanId, $userId);
     }
 
 }
