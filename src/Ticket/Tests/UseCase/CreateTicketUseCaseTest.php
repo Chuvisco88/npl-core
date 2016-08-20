@@ -83,7 +83,13 @@ class CreateTicketUseCaseTest extends \PHPUnit_Framework_TestCase
         $this->processUseCase();
     }
 
-    public function testNoTicketsLeftException()
+//    TODO: Implement max tickets of lan
+//    public function testNoTicketsLeftException()
+//    {
+//
+//    }
+
+    public function testMaxTicketsPerLanPerUserExceededException()
     {
         $this->_setupLanRepository();
         $this->_setupUserRepository();
