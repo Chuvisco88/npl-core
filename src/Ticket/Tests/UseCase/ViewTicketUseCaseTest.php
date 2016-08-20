@@ -38,7 +38,11 @@ class ViewTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
         $ticket->setId($this->_requestTicketId);
         $ticket->setHolder($holder);
 
-        $this->_ticketRepository = new FakeTicketRepository(1, $lan, $buyer, $holder);
+        $tickets = [];
+        $ticket = new TicketEntity($buyer, $lan, $holder);
+        $ticket->setId(1);
+        $tickets[] = $ticket;
+        $this->_ticketRepository = new FakeTicketRepository($tickets);
     }
 
     public function testCanSeeTicket()

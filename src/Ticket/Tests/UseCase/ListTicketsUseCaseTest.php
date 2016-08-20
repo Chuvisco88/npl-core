@@ -4,6 +4,7 @@ namespace Npl\Ticket\UseCase;
 
 use Npl\Lan\Entity\LanEntity;
 use Npl\Ticket\Entity\TicketEntity;
+use Npl\Ticket\Generator\TicketGenerator;
 use Npl\Ticket\Tests\Fake\Repository\FakeTicketRepository;
 use Npl\Ticket\Tests\Fake\Request\FakeListTicketsRequest;
 use Npl\Ticket\Tests\Fake\Response\FakeListTicketsResponse;
@@ -82,6 +83,9 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
      */
     private function _setupTicketRepository($numberOfTickets)
     {
-        $this->_ticketRepository = new FakeTicketRepository($numberOfTickets, $this->_lan, $this->_user);
+        $ticketConfiguration = new TicketEntity($this->_user, $this->_lan);
+        $ticketGenerator = new TicketGenerator($ticketConfiguration, $numberOfTickets);
+        $tickets = $ticketGenerator->generate();
+        $this->_ticketRepository = new FakeTicketRepository($tickets);
     }
 }
