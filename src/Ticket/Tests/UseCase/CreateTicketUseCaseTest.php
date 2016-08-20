@@ -5,10 +5,10 @@ namespace Npl\Ticket\UseCase;
 use Npl\Lan\Entity\LanEntity;
 use Npl\Lan\Exception\LanNotFoundException;
 use Npl\Lan\Repository\LanRepositoryInterface;
-use Npl\Ticket\Entity\TicketEntity;
 use Npl\Ticket\Exception\MaxTicketsPerLanPerUserExceededException;
 use Npl\Ticket\Generator\TicketGenerator;
 use Npl\Ticket\Tests\Fake\Collector\FakeCreateTicketCollector;
+use Npl\Ticket\Tests\Fake\Generator\FakeTicketGeneratorConfiguration;
 use Npl\Ticket\Tests\Fake\Repository\FakeTicketRepository;
 use Npl\Ticket\Tests\Fake\Request\FakeCreateTicketRequest;
 use Npl\Ticket\Tests\Fake\Response\FakeCreateTicketResponse;
@@ -137,7 +137,7 @@ class CreateTicketUseCaseTest extends \PHPUnit_Framework_TestCase
 
     private function _setupTicketRepository($numberOfTickets = 0)
     {
-        $ticketConfiguration = new TicketEntity($this->_user, $this->_lan);
+        $ticketConfiguration = new FakeTicketGeneratorConfiguration($this->_user, $this->_lan);
         $ticketGenerator = new TicketGenerator($ticketConfiguration, $numberOfTickets);
         $tickets = $ticketGenerator->generate();
         $this->_ticketRepository = new FakeTicketRepository($tickets);

@@ -12,7 +12,7 @@ class TicketGenerator implements GeneratorInterface
     private $_holder;
     private $_numberOfTickets;
 
-    public function __construct($ticketConfiguration, $numberOfTickets = 0)
+    public function __construct(TicketGeneratorConfigurationInterface $ticketConfiguration, $numberOfTickets = 0)
     {
         $this->_lan = $ticketConfiguration->getLan();
         $this->_buyer = $ticketConfiguration->getBuyer();
