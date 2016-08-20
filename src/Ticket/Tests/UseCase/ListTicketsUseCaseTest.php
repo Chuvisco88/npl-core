@@ -21,7 +21,7 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
     private $_lan;
     private $_user;
     private $_users = [];
-    private $_tickets = [];
+    private $_ticketRepository;
 
     public function setUp()
     {
@@ -34,6 +34,7 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
 
     public function testHasNoTickets()
     {
+        $this->_setupTicketRepository(0);
         $response = $this->processUseCase();
 
         static::assertEmpty($response->getTickets());
@@ -41,7 +42,7 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
 
     public function testCanSeeTickets()
     {
-        $this->addTickets(self::NUMBER_OF_TICKETS);
+        $this->_setupTicketRepository(self::NUMBER_OF_TICKETS);
 
         $response = $this->processUseCase();
 
@@ -53,6 +54,7 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException(UserNotFoundException::class);
 
+        $this->_setupTicketRepository(0);
         $this->_users = [];
 
         $this->processUseCase();
@@ -64,12 +66,11 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
     private function processUseCase()
     {
         $userRepository = new FakeUserRepository($this->_users);
-        $ticketRepository = new FakeTicketRepository($this->_tickets);
         $ticketViewFactory = new FakeTicketViewFactory();
         $request = new FakeListTicketsRequest(self::USER_ID);
         $response = new FakeListTicketsResponse();
 
-        $useCase = new ListTicketsUseCase($ticketRepository, $ticketViewFactory,
+        $useCase = new ListTicketsUseCase($this->_ticketRepository, $ticketViewFactory,
             $userRepository);
         $useCase->process($request, $response);
 
@@ -79,12 +80,8 @@ class ListTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
     /**
      * @param $numberOfTickets
      */
-    private function addTickets($numberOfTickets)
+    private function _setupTicketRepository($numberOfTickets)
     {
-        for ($ticketId = 1; $ticketId <= $numberOfTickets; $ticketId++) {
-            $ticket = new TicketEntity($this->_user, $this->_lan);
-            $ticket->setId($ticketId);
-            $this->_tickets[] = $ticket;
-        }
+        $this->_ticketRepository = new FakeTicketRepository($numberOfTickets, $this->_lan, $this->_user);
     }
 }

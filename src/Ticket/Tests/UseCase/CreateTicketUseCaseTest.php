@@ -5,9 +5,8 @@ namespace Npl\Ticket\UseCase;
 use Npl\Lan\Entity\LanEntity;
 use Npl\Lan\Exception\LanNotFoundException;
 use Npl\Lan\Repository\LanRepositoryInterface;
-use Npl\Ticket\Entity\TicketEntity;
-use Npl\Ticket\Repository\TicketRepositoryInterface;
 use Npl\Ticket\Tests\Fake\Collector\FakeCreateTicketCollector;
+use Npl\Ticket\Tests\Fake\Repository\FakeTicketRepository;
 use Npl\Ticket\Tests\Fake\Request\FakeCreateTicketRequest;
 use Npl\Ticket\Tests\Fake\Response\FakeCreateTicketResponse;
 use Npl\Ticket\Tests\Fake\ViewFactory\FakeTicketViewFactory;
@@ -123,17 +122,11 @@ class CreateTicketUseCaseTest extends \PHPUnit_Framework_TestCase
 
     private function _setupTicketRepository($addNumberOfTickets = 0)
     {
-        $this->_ticketRepository = $this->getMock(TicketRepositoryInterface::class);
-        $tickets = [];
-
-        for ($ticketId = 1; $ticketId <= $addNumberOfTickets; $ticketId++) {
-            $ticket = new TicketEntity($this->_user, $this->_lan);
-            $ticket->setId($ticketId + 1);
-            $tickets[] = $ticket;
-        }
-
-        $this->_ticketRepository->method('findByUserId')
-            ->willReturn($tickets);
+        $this->_ticketRepository = new FakeTicketRepository(
+            $addNumberOfTickets,
+            $this->_lan,
+            $this->_user
+        );
     }
 
     private function _setupCollector()

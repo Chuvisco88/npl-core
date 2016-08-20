@@ -20,7 +20,7 @@ class ViewTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
     private $_holderNickname = 'Holder Nickname';
     private $_lanName = 'noprobLAN vX.Y';
     private $_requestTicketId;
-    private $_tickets = [];
+    private $_ticketRepository;
 
     public function setUp()
     {
@@ -37,7 +37,8 @@ class ViewTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
         $ticket = new TicketEntity($buyer, $lan);
         $ticket->setId($this->_requestTicketId);
         $ticket->setHolder($holder);
-        $this->_tickets[] = $ticket;
+
+        $this->_ticketRepository = new FakeTicketRepository(1, $lan, $buyer, $holder);
     }
 
     public function testCanSeeTicket()
@@ -63,12 +64,11 @@ class ViewTicketsUseCaseTest extends \PHPUnit_Framework_TestCase
      */
     private function processUseCase()
     {
-        $ticketRepository = new FakeTicketRepository($this->_tickets);
         $ticketViewFactory = new FakeTicketViewFactory();
         $request = new FakeViewTicketRequest($this->_requestTicketId);
         $response = new FakeViewTicketResponse();
 
-        $useCase = new ViewTicketUseCase($ticketRepository, $ticketViewFactory);
+        $useCase = new ViewTicketUseCase($this->_ticketRepository, $ticketViewFactory);
         $useCase->process($request, $response);
 
         return $response;
