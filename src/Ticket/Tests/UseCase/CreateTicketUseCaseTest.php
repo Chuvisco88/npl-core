@@ -31,7 +31,8 @@ class CreateTicketUseCaseTest extends \PHPUnit_Framework_TestCase
     private $_lanRepository;
     private $_userRepository;
     private $_ticketRepository;
-    private $_collector;
+    private $_createTicketCollector;
+    private $_tickets;
 
     public function setUp()
     {
@@ -137,7 +138,7 @@ class CreateTicketUseCaseTest extends \PHPUnit_Framework_TestCase
 
     private function _setupCollector()
     {
-        $this->_collector = new FakeCreateTicketCollector($this->_lanRepository, $this->_ticketRepository, $this->_userRepository);
+        $this->_createTicketCollector = new FakeCreateTicketCollector($this->_lanRepository, $this->_ticketRepository, $this->_userRepository);
     }
 
     /**
@@ -151,7 +152,7 @@ class CreateTicketUseCaseTest extends \PHPUnit_Framework_TestCase
         $this->_setupCollector();
 
         $useCase = new CreateTicketUseCase(
-            $this->_collector,
+            $this->_createTicketCollector,
             $ticketViewFactory
         );
 
