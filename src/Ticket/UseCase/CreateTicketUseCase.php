@@ -2,12 +2,14 @@
 
 namespace Npl\Ticket\UseCase;
 
+use Npl\Lan\Entity\LanEntity;
 use Npl\Lan\Exception\LanNotFoundException;
 use Npl\Ticket\Collector\CreateTicketCollectorInterface;
 use Npl\Ticket\Entity\TicketEntity;
 use Npl\Ticket\Request\CreateTicketRequestInterface;
 use Npl\Ticket\Response\CreateTicketResponseInterface;
 use Npl\Ticket\ViewFactory\TicketViewFactoryInterface;
+use Npl\User\Entity\UserEntity;
 use Npl\User\Exception\UserNotFoundException;
 
 /**
@@ -18,25 +20,40 @@ use Npl\User\Exception\UserNotFoundException;
 class CreateTicketUseCase
 {
     /**
+     * @var CreateTicketCollectorInterface
+     */
+    private $_createTicketCollector;
+    /**
+     * @var LanEntity
+     */
+    private $_lanEntity;
+    /**
+     * @var int
+     */
+    private $_lanId;
+    /**
+     * @var UserEntity
+     */
+    private $_userEntity;
+    /**
+     * @var int
+     */
+    private $_userId;
+    /**
      * @var TicketViewFactoryInterface
      */
     private $_ticketViewFactory;
-
-    private $_userId;
-    private $_lanId;
-    private $_lanEntity;
-    private $_userEntity;
 
     public function __construct(
         CreateTicketCollectorInterface $createTicketCollector,
         TicketViewFactoryInterface $ticketViewFactory
     ) {
-        $this->_collector = $createTicketCollector;
+        $this->_createTicketCollector = $createTicketCollector;
         $this->_ticketViewFactory = $ticketViewFactory;
     }
 
     /**
-     * @param CreateTicketRequestInterface  $request
+     * @param CreateTicketRequestInterface $request
      * @param CreateTicketResponseInterface $response
      *
      * @return CreateTicketResponseInterface
@@ -60,14 +77,22 @@ class CreateTicketUseCase
         return $response;
     }
 
+    /**
+     * @throws UserNotFoundException
+     */
     private function throwErrorIfNotAUser()
     {
-        $this->_userEntity = $this->_collector->findUserById($this->_userId);
+        $this->_userEntity
+            = $this->_createTicketCollector->findUserById($this->_userId);
     }
 
+    /**
+     * @throws LanNotFoundException
+     */
     private function throwErrorIfNotALan()
     {
-        $this->_lanEntity = $this->_collector->findLanById($this->_lanId);
+        $this->_lanEntity
+            = $this->_createTicketCollector->findLanById($this->_lanId);
     }
 
     private function throwErrorIfNoTicketsLeft()
@@ -77,7 +102,7 @@ class CreateTicketUseCase
 
     private function throwErrorIfMaxTicketsOfUserReached()
     {
-//        $this->_collector->findTicketsByLanAndUser($this->_lanId, $this->_userId);
+//        $this->_createTicketCollector->findTicketsByLanAndUser($this->_lanId, $this->_userId);
     }
 
     private function createTicket()
@@ -85,8 +110,10 @@ class CreateTicketUseCase
         return new TicketEntity($this->_userEntity, $this->_lanEntity);
     }
 
-    private function addTicketToResponse(TicketEntity $ticketEntity, CreateTicketResponseInterface $response)
-    {
+    private function addTicketToResponse(
+        TicketEntity $ticketEntity,
+        CreateTicketResponseInterface $response
+    ) {
         $ticketView = $this->_ticketViewFactory->create($ticketEntity);
         $response->setTicket($ticketView);
     }
