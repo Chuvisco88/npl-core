@@ -29,7 +29,7 @@ class FakeUserRepository implements UserRepositoryInterface
     }
 
     /**
-     * @return array
+     * @return UserEntity[]
      */
     public function findAll()
     {

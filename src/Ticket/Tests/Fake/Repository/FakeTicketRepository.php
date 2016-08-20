@@ -48,7 +48,7 @@ class FakeTicketRepository implements TicketRepositoryInterface
     /**
      * @param $userId
      *
-     * @return array
+     * @return TicketEntity[]
      */
     public function findByUserId($userId)
     {
