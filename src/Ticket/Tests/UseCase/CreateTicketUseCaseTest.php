@@ -5,6 +5,7 @@ namespace Npl\Ticket\UseCase;
 use Npl\Lan\Entity\LanEntity;
 use Npl\Lan\Exception\LanNotFoundException;
 use Npl\Lan\Repository\LanRepositoryInterface;
+use Npl\Ticket\Exception\MaxTicketsPerLanPerUserExceeded;
 use Npl\Ticket\Tests\Fake\Collector\FakeCreateTicketCollector;
 use Npl\Ticket\Tests\Fake\Repository\FakeTicketRepository;
 use Npl\Ticket\Tests\Fake\Request\FakeCreateTicketRequest;
@@ -18,6 +19,7 @@ class CreateTicketUseCaseTest extends \PHPUnit_Framework_TestCase
 {
     const LAN_ID = 1;
     const USER_ID = 1;
+    const MAX_NUMBER_OF_TICKETS_PER_LAN_PER_USER = 5;
 
     private $_lan;
     private $_lanName = 'noprobLAN vX.Y';
@@ -79,6 +81,17 @@ class CreateTicketUseCaseTest extends \PHPUnit_Framework_TestCase
         $this->processUseCase();
     }
 
+    public function testNoTicketsLeftException()
+    {
+        $this->_setupLanRepository();
+        $this->_setupUserRepository();
+        $this->_setupTicketRepository(self::MAX_NUMBER_OF_TICKETS_PER_LAN_PER_USER);
+
+        $this->setExpectedException(MaxTicketsPerLanPerUserExceeded::class);
+
+        $this->processUseCase();
+    }
+
     private function _setupLanEntity()
     {
         $this->_lan = new LanEntity(
@@ -131,7 +144,11 @@ class CreateTicketUseCaseTest extends \PHPUnit_Framework_TestCase
 
     private function _setupCollector()
     {
-        $this->_createTicketCollector = new FakeCreateTicketCollector($this->_lanRepository, $this->_ticketRepository, $this->_userRepository);
+        $this->_createTicketCollector = new FakeCreateTicketCollector(
+            $this->_lanRepository,
+            $this->_ticketRepository,
+            $this->_userRepository
+        );
     }
 
     /**
@@ -146,7 +163,8 @@ class CreateTicketUseCaseTest extends \PHPUnit_Framework_TestCase
 
         $useCase = new CreateTicketUseCase(
             $this->_createTicketCollector,
-            $ticketViewFactory
+            $ticketViewFactory,
+            self::MAX_NUMBER_OF_TICKETS_PER_LAN_PER_USER
         );
 
         $useCase->process($request, $response);

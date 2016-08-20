@@ -6,6 +6,7 @@ use Npl\Lan\Entity\LanEntity;
 use Npl\Lan\Exception\LanNotFoundException;
 use Npl\Ticket\Collector\CreateTicketCollectorInterface;
 use Npl\Ticket\Entity\TicketEntity;
+use Npl\Ticket\Exception\MaxTicketsPerLanPerUserExceededException;
 use Npl\Ticket\Request\CreateTicketRequestInterface;
 use Npl\Ticket\Response\CreateTicketResponseInterface;
 use Npl\Ticket\ViewFactory\TicketViewFactoryInterface;
@@ -32,6 +33,10 @@ class CreateTicketUseCase
      */
     private $_lanId;
     /**
+     * @var int
+     */
+    private $_maxNumberOfTicketsPerLanPerUser;
+    /**
      * @var UserEntity
      */
     private $_userEntity;
@@ -46,10 +51,12 @@ class CreateTicketUseCase
 
     public function __construct(
         CreateTicketCollectorInterface $createTicketCollector,
-        TicketViewFactoryInterface $ticketViewFactory
+        TicketViewFactoryInterface $ticketViewFactory,
+        $maxNumberOfTicketsPerLanPerUser
     ) {
         $this->_createTicketCollector = $createTicketCollector;
         $this->_ticketViewFactory = $ticketViewFactory;
+        $this->_maxNumberOfTicketsPerLanPerUser = $maxNumberOfTicketsPerLanPerUser;
     }
 
     /**
@@ -59,6 +66,7 @@ class CreateTicketUseCase
      * @return CreateTicketResponseInterface
      * @throws LanNotFoundException
      * @throws UserNotFoundException
+     * @throws MaxTicketsPerLanPerUserExceededException
      */
     public function process(
         CreateTicketRequestInterface $request,
@@ -100,16 +108,33 @@ class CreateTicketUseCase
 
     }
 
+    /**
+     * @throws MaxTicketsPerLanPerUserExceededException
+     */
     private function throwErrorIfMaxTicketsOfUserReached()
     {
-//        $this->_createTicketCollector->findTicketsByLanAndUser($this->_lanId, $this->_userId);
+        $existingTickets = $this->_createTicketCollector->findTicketsByLanAndUser(
+            $this->_lanId,
+            $this->_userId
+        );
+
+        if (count($existingTickets) >= $this->_maxNumberOfTicketsPerLanPerUser) {
+            throw new MaxTicketsPerLanPerUserExceededException();
+        }
     }
 
+    /**
+     * @return TicketEntity
+     */
     private function createTicket()
     {
         return new TicketEntity($this->_userEntity, $this->_lanEntity);
     }
 
+    /**
+     * @param TicketEntity                  $ticketEntity
+     * @param CreateTicketResponseInterface $response
+     */
     private function addTicketToResponse(
         TicketEntity $ticketEntity,
         CreateTicketResponseInterface $response
