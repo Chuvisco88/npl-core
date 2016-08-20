@@ -7,6 +7,7 @@ use Npl\Lan\Exception\LanNotFoundException;
 use Npl\Lan\Repository\LanRepositoryInterface;
 use Npl\Ticket\Entity\TicketEntity;
 use Npl\Ticket\Repository\TicketRepositoryInterface;
+use Npl\Ticket\Tests\Fake\Collector\FakeCreateTicketCollector;
 use Npl\Ticket\Tests\Fake\Request\FakeCreateTicketRequest;
 use Npl\Ticket\Tests\Fake\Response\FakeCreateTicketResponse;
 use Npl\Ticket\Tests\Fake\ViewFactory\FakeTicketViewFactory;
@@ -30,6 +31,7 @@ class CreateTicketUseCaseTest extends \PHPUnit_Framework_TestCase
     private $_lanRepository;
     private $_userRepository;
     private $_ticketRepository;
+    private $_collector;
 
     public function setUp()
     {
@@ -73,7 +75,6 @@ class CreateTicketUseCaseTest extends \PHPUnit_Framework_TestCase
         $this->_setupTicketRepository();
 
         $this->setExpectedException(UserNotFoundException::class);
-
 
         $this->processUseCase();
     }
@@ -134,6 +135,11 @@ class CreateTicketUseCaseTest extends \PHPUnit_Framework_TestCase
             ->willReturn($tickets);
     }
 
+    private function _setupCollector()
+    {
+        $this->_collector = new FakeCreateTicketCollector($this->_lanRepository, $this->_ticketRepository, $this->_userRepository);
+    }
+
     /**
      * @return FakeCreateTicketResponse
      */
@@ -142,12 +148,11 @@ class CreateTicketUseCaseTest extends \PHPUnit_Framework_TestCase
         $ticketViewFactory = new FakeTicketViewFactory();
         $request = new FakeCreateTicketRequest($this->_requestLanId, $this->_requestUserId);
         $response = new FakeCreateTicketResponse();
+        $this->_setupCollector();
 
         $useCase = new CreateTicketUseCase(
-            $this->_lanRepository,
-            $this->_ticketRepository,
-            $ticketViewFactory,
-            $this->_userRepository
+            $this->_collector,
+            $ticketViewFactory
         );
 
         $useCase->process($request, $response);
